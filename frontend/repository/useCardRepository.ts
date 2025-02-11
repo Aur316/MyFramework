@@ -11,7 +11,6 @@ export function useCardRepository(): UseCardRepository {
 
   const addCard = useCallback(
     async (card: Card): Promise<Card> => {
-      console.log(card, "card repo");
       return await httpPost<Card>("/cards", card);
     },
     [httpPost]

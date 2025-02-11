@@ -12,9 +12,7 @@ export function useCardService(): UseCardService {
   };
 
   const createCard = async (card: Card): Promise<void> => {
-    console.log(card, "card service");
     const newCard = await addCard(card);
-    console.log(newCard, "newCard service");
     setCards([...cards, newCard]);
   };
 
