@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
+import { Card } from "../../model/cardModel";
 import { cardService } from "../service/cardService";
-import { Card } from "../model/cardModel";
 
 export const cardController = {
   getAll: async (req: Request, res: Response): Promise<void> => {
@@ -31,11 +31,9 @@ export const cardController = {
         `Controller Error: Failed to retrieve card with ID ${req.params.id}.`,
         error
       );
-      res
-        .status(500)
-        .json({
-          error: "Internal Server Error: Unable to fetch the requested card.",
-        });
+      res.status(500).json({
+        error: "Internal Server Error: Unable to fetch the requested card.",
+      });
     }
   },
 

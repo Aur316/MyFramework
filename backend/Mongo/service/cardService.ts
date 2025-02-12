@@ -1,5 +1,5 @@
-import { inputCardFactory, outputCardFactory } from "../factory/cardFactory";
-import { Card, CardDocument } from "../model/cardModel";
+import { inputCardFactory, outputCardFactory } from "../../factory/cardFactory";
+import { Card, CardDocument } from "../../model/cardModel";
 import { cardRepository } from "../repository/cardRepository";
 
 export const cardService = {

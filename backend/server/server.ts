@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import cardRoutes from "../route/routes";
-import { connectToDatabase } from "../database/Mongo/mongodb";
+import { connectToDatabase } from "../Mongo/database/mongodb";
 
 dotenv.config();
 

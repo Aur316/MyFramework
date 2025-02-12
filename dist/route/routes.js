@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const cardController_1 = require("../controller/cardController");
+const cardController_1 = require("../Mongo/controller/cardController");
 const router = express_1.default.Router();
 router.get("/cards", cardController_1.cardController.getAll);
 router.get("/cards/:id", cardController_1.cardController.getById);

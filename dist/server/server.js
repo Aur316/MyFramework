@@ -7,7 +7,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const routes_1 = __importDefault(require("../route/routes"));
-const mongodb_1 = require("../database/Mongo/mongodb");
+const mongodb_1 = require("../Mongo/database/mongodb");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());

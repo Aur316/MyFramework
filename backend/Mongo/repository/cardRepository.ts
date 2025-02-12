@@ -1,5 +1,5 @@
-import { useMongoAPI } from "../database/Mongo/useMongoAPI";
-import { CardDocument } from "../model/cardModel";
+import { CardDocument } from "../../model/cardModel";
+import { useMongoAPI } from "../database/useMongoAPI";
 
 const { findAll, findById, insertOne, updateOne, deleteOne } =
   useMongoAPI<CardDocument>("cards");

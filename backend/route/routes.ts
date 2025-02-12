@@ -1,5 +1,5 @@
 import express from "express";
-import { cardController } from "../controller/cardController";
+import { cardController } from "../Mongo/controller/cardController";
 
 const router = express.Router();
 
