@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { useTranslation } from "next-i18next";
 
 type AddCardModalProps = {
@@ -8,7 +8,10 @@ type AddCardModalProps = {
   onSave: (title: string, description: string) => void;
 };
 
-export function AddCardModal({ onClose, onSave }: AddCardModalProps) {
+export function AddCardModal({
+  onClose,
+  onSave,
+}: AddCardModalProps): JSX.Element {
   const { t } = useTranslation();
 
   const [title, setTitle] = useState<string>("");

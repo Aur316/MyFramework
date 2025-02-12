@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { Card as CardType } from "../types/cardTypes";
 import { useCardService } from "../service/useCardService";
 import { useTranslation } from "react-i18next";
@@ -9,7 +9,7 @@ type CardProps = {
   card: CardType;
 };
 
-export function Card({ card }: CardProps) {
+export function Card({ card }: CardProps): JSX.Element {
   const { updateCard, removeCard } = useCardService();
   const { t } = useTranslation();
 

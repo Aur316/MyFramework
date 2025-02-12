@@ -7,7 +7,7 @@ const CardContext = createContext<CardContextType | undefined>(undefined);
 
 export function CardProvider({ children }: { children: ReactNode }) {
   const [cards, setCards] = useState<Card[]>([]);
-
+  console.log(cards, "kártyák");
   return (
     <CardContext.Provider value={{ cards, setCards }}>
       {children}

@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { getRoutes } from "../route/routes";
+import { JSX } from "react";
 
-export function Sidebar() {
+export function Sidebar(): JSX.Element {
   const routes = getRoutes();
 
   const menuItems = [
