@@ -1,17 +1,14 @@
 import { Request, Response } from "express";
-import { Card } from "../model/cardModel";
 import { cardService } from "../service/cardService";
+import { Card } from "../../Mongo/model/cardModel";
 
-export const mongoCardController = {
-  getAll: async (req: Request, res: Response): Promise<void> => {
+export const firebaseCardController = {
+  getAll: async (req: Request, res: Response) => {
     try {
-      const cards: Card[] = await cardService.getAllCards();
+      const cards = await cardService.getAllCards();
       res.json(cards);
     } catch (error) {
-      console.error("Controller Error: Failed to retrieve all cards.", error);
-      res
-        .status(500)
-        .json({ error: "Internal Server Error: Unable to fetch cards." });
+      res.status(500).json({ error: "Failed to fetch Firebase cards" });
     }
   },
 
@@ -20,7 +17,7 @@ export const mongoCardController = {
     res: Response
   ): Promise<void> => {
     try {
-      const card: Card | null = await cardService.getCardById(req.params.id);
+      const card = await cardService.getCardById(req.params.id);
       if (!card) {
         res.status(404).json({ error: "Card not found." });
         return;
@@ -37,15 +34,12 @@ export const mongoCardController = {
     }
   },
 
-  create: async (req: Request<{}, {}, Card>, res: Response): Promise<void> => {
+  create: async (req: Request, res: Response) => {
     try {
       const newCard: Card = await cardService.createCard(req.body);
       res.status(201).json(newCard);
     } catch (error) {
-      console.error("Controller Error: Failed to create a new card.", error);
-      res
-        .status(500)
-        .json({ error: "Internal Server Error: Unable to create the card." });
+      res.status(500).json({ error: "Failed to create card" });
     }
   },
 
@@ -74,10 +68,7 @@ export const mongoCardController = {
     }
   },
 
-  delete: async (
-    req: Request<{ id: string }>,
-    res: Response
-  ): Promise<void> => {
+  delete: async (req: Request, res: Response) => {
     try {
       await cardService.deleteCard(req.params.id);
       res.status(204).send();
@@ -86,9 +77,7 @@ export const mongoCardController = {
         `Controller Error: Failed to delete card with ID ${req.params.id}.`,
         error
       );
-      res
-        .status(500)
-        .json({ error: "Internal Server Error: Unable to delete the card." });
+      res.status(500).json({ error: "Failed to delete card" });
     }
   },
 };

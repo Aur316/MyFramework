@@ -9,19 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mongoCardController = void 0;
+exports.firebaseCardController = void 0;
 const cardService_1 = require("../service/cardService");
-exports.mongoCardController = {
+exports.firebaseCardController = {
     getAll: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const cards = yield cardService_1.cardService.getAllCards();
             res.json(cards);
         }
         catch (error) {
-            console.error("Controller Error: Failed to retrieve all cards.", error);
-            res
-                .status(500)
-                .json({ error: "Internal Server Error: Unable to fetch cards." });
+            res.status(500).json({ error: "Failed to fetch Firebase cards" });
         }
     }),
     getById: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -46,10 +43,7 @@ exports.mongoCardController = {
             res.status(201).json(newCard);
         }
         catch (error) {
-            console.error("Controller Error: Failed to create a new card.", error);
-            res
-                .status(500)
-                .json({ error: "Internal Server Error: Unable to create the card." });
+            res.status(500).json({ error: "Failed to create card" });
         }
     }),
     update: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -75,9 +69,7 @@ exports.mongoCardController = {
         }
         catch (error) {
             console.error(`Controller Error: Failed to delete card with ID ${req.params.id}.`, error);
-            res
-                .status(500)
-                .json({ error: "Internal Server Error: Unable to delete the card." });
+            res.status(500).json({ error: "Failed to delete card" });
         }
     }),
 };

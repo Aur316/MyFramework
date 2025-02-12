@@ -1,5 +1,5 @@
-import { inputCardFactory, outputCardFactory } from "../factory/cardFactory";
-import { Card, CardDocument } from "../model/cardModel";
+import { Card } from "../../Mongo/model/cardModel";
+import { inputCardFactory, outputCardFactory } from "../factory/factory";
 import { cardRepository } from "../repository/cardRepository";
 
 export const cardService = {
@@ -15,8 +15,8 @@ export const cardService = {
 
   getCardById: async (id: string): Promise<Card | null> => {
     try {
-      const cardDoc: CardDocument | null = await cardRepository.getCardById(id);
-      return cardDoc ? outputCardFactory(cardDoc) : null;
+      const card = await cardRepository.getCardById(id);
+      return card ? outputCardFactory(card) : null;
     } catch (error) {
       console.error(
         `Service Error: Failed to retrieve card with ID ${id}.`,
@@ -28,8 +28,8 @@ export const cardService = {
 
   createCard: async (card: Card): Promise<Card> => {
     try {
-      const newCard: CardDocument = inputCardFactory(card);
-      const savedCard: CardDocument = await cardRepository.createCard(newCard);
+      const newCard = inputCardFactory(card);
+      const savedCard = await cardRepository.createCard(newCard.id, newCard);
       return outputCardFactory(savedCard);
     } catch (error) {
       console.error("Service Error: Failed to create a new card.", error);
@@ -39,10 +39,7 @@ export const cardService = {
 
   updateCard: async (id: string, card: Partial<Card>): Promise<Card | null> => {
     try {
-      const updatedCard: CardDocument | null = await cardRepository.updateCard(
-        id,
-        card
-      );
+      const updatedCard = await cardRepository.updateCard(id, card);
       return updatedCard ? outputCardFactory(updatedCard) : null;
     } catch (error) {
       console.error(

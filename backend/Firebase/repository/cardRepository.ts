@@ -1,8 +1,8 @@
-import { CardDocument } from "../model/cardModel";
-import { useMongoAPI } from "../database/useMongoAPI";
+import { Card } from "../../Mongo/model/cardModel";
+import { useFirebaseAPI } from "../database/useFireBaseAPI";
 
 const { findAll, findById, insertOne, updateOne, deleteOne } =
-  useMongoAPI<CardDocument>("cards");
+  useFirebaseAPI<Card>("cards");
 
 export const cardRepository = {
   getAllCards: findAll,

@@ -1,12 +1,14 @@
 import express from "express";
-import { cardController } from "../Mongo/controller/cardController";
-
+import { mongoCardController } from "../Mongo/controller/cardController";
+import { firebaseCardController } from "../Firebase/controller/cardController";
 const router = express.Router();
 
-router.get("/cards", cardController.getAll);
-router.get("/cards/:id", cardController.getById);
-router.post("/cards", cardController.create);
-router.put("/cards/:id", cardController.update);
-router.delete("/cards/:id", cardController.delete);
+const controller = false ? mongoCardController : firebaseCardController;
+
+router.get("/cards", controller.getAll);
+router.get("/cards/:id", controller.getById);
+router.post("/cards", controller.create);
+router.put("/cards/:id", controller.update);
+router.delete("/cards/:id", controller.delete);
 
 export default router;
