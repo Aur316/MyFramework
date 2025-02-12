@@ -1,43 +1,33 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { Card, UseCardRepository } from "../types/cardTypes";
 import useHttp from "../hook/useHttp";
+import { useApiBaseUrl } from "../config/apiConfig";
 
 export function useCardRepository(): UseCardRepository {
   const { httpGet, httpPost, httpPut, httpDelete } = useHttp();
-
-  const API_BASE_URL = useMemo(() => {
-    const isServer = process.env.NEXT_PUBLIC_DATA_SOURCE !== "server";
-    let baseUrl = isServer
-      ? process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
-      : process.env.NEXT_PUBLIC_DOMAIN || "http://localhost:3000";
-
-    baseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
-    return isServer
-      ? `${baseUrl}/cards`
-      : `${baseUrl}/api/${process.env.NEXT_PUBLIC_DATABASE}/cards`;
-  }, []);
+  const API_BASE_URL = useApiBaseUrl();
 
   const fetchCards = useCallback(async (): Promise<Card[]> => {
-    return await httpGet<Card[]>(API_BASE_URL);
+    return await httpGet<Card[]>(`${API_BASE_URL}/cards`);
   }, [httpGet, API_BASE_URL]);
 
   const addCard = useCallback(
     async (card: Card): Promise<Card> => {
-      return await httpPost<Card>(API_BASE_URL, card);
+      return await httpPost<Card>(`${API_BASE_URL}/cards`, card);
     },
     [httpPost, API_BASE_URL]
   );
 
   const updateCard = useCallback(
     async (card: Card): Promise<Card> => {
-      return await httpPut<Card>(`${API_BASE_URL}/${card.id}`, card);
+      return await httpPut<Card>(`${API_BASE_URL}/cards/${card.id}`, card);
     },
     [httpPut, API_BASE_URL]
   );
 
   const deleteCard = useCallback(
     async (id: string): Promise<void> => {
-      await httpDelete(`${API_BASE_URL}/${id}`);
+      await httpDelete(`${API_BASE_URL}/cards/${id}`);
     },
     [httpDelete, API_BASE_URL]
   );
