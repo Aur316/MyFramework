@@ -12,7 +12,9 @@ export function useCardRepository(): UseCardRepository {
       : process.env.NEXT_PUBLIC_DOMAIN || "http://localhost:3000";
 
     baseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
-    return isServer ? `${baseUrl}/cards` : `${baseUrl}/api/mongo/cards`;
+    return isServer
+      ? `${baseUrl}/cards`
+      : `${baseUrl}/api/${process.env.NEXT_PUBLIC_DATABASE}/cards`;
   }, []);
 
   const fetchCards = useCallback(async (): Promise<Card[]> => {
