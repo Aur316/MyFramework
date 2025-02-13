@@ -8,6 +8,16 @@ export interface Card {
 export interface CardContextType {
   cards: Card[];
   setCards: (cards: Card[]) => void;
+  getCardLoading: boolean;
+  setGetCardLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  updateCardLoading: boolean;
+  setUpdateCardLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  deleteCardLoading: boolean;
+  setDeletetCardLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  createCardLoading: boolean;
+  setCreateCardLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  sureForDelete: boolean;
+  setSureForDelete: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface UseHttp {
@@ -42,4 +52,15 @@ export interface UseCardService {
   updateCard: (card: Card) => Promise<void>;
   removeCard: (id: string) => Promise<void>;
   loadCards: () => Promise<void>;
+}
+
+export interface SureMessageProps {
+  title: string;
+  text: string;
+  yesText: string;
+  noText: string;
+  noClick: () => void;
+  yesClick: () => void;
+  cancel: () => void;
+  loader: boolean;
 }

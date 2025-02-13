@@ -27,6 +27,11 @@ i18n.use(initReactI18next).init({
         noCardsAvailable: "No cards available.",
         edit: "Edit",
         delete: "Delete",
+        deleteCardTitle: "Are you sure you want to delete this card?",
+        deleteCardText:
+          "If you delete this card, it will be permanently removed!",
+        yes: "Yes",
+        no: "No",
       },
     },
     hu: {
@@ -53,6 +58,10 @@ i18n.use(initReactI18next).init({
         noCardsAvailable: "Nincsenek elérhető kártyák.",
         edit: "Módosítás",
         delete: "Törlés",
+        deleteCardTitle: "Biztos törölni akarod ezt a kártyát?",
+        deleteCardText: "Ha törlöd ezt a kártyát, akkor véglegesen törlődik!",
+        yes: "Igen",
+        no: "Nem",
       },
     },
   },

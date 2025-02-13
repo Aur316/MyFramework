@@ -4,6 +4,9 @@ import { JSX, useState } from "react";
 import { Card as CardType } from "../types/cardTypes";
 import { useCardService } from "../service/useCardService";
 import { useTranslation } from "react-i18next";
+import { useCardStore } from "../store/useCardContext";
+import Loader from "./ui/Loader";
+import SureMessage from "./ui/SureMessage";
 
 type CardProps = {
   card: CardType;
@@ -12,6 +15,12 @@ type CardProps = {
 export function Card({ card }: CardProps): JSX.Element {
   const { updateCard, removeCard } = useCardService();
   const { t } = useTranslation();
+  const {
+    updateCardLoading,
+    deleteCardLoading,
+    sureForDelete,
+    setSureForDelete,
+  } = useCardStore();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editTitle, setEditTitle] = useState<string>(card.title);
@@ -19,8 +28,8 @@ export function Card({ card }: CardProps): JSX.Element {
     card.description
   );
 
-  const save = () => {
-    updateCard({
+  const update = async () => {
+    await updateCard({
       ...card,
       title: editTitle,
       description: editDescription,
@@ -28,8 +37,9 @@ export function Card({ card }: CardProps): JSX.Element {
     setIsEditing(false);
   };
 
-  const deleteCard = () => {
-    removeCard(card.id);
+  const deleteCard = async () => {
+    await removeCard(card.id);
+    setSureForDelete(false);
   };
 
   return (
@@ -49,9 +59,13 @@ export function Card({ card }: CardProps): JSX.Element {
             onChange={(e) => setEditDescription(e.target.value)}
           />
           <div className="flex justify-end space-x-2">
-            <button className="btn btn-success" onClick={save}>
-              {t("save")}
-            </button>
+            {updateCardLoading ? (
+              <Loader colorClass="text-info" />
+            ) : (
+              <button className="btn btn-success" onClick={update}>
+                {t("save")}
+              </button>
+            )}
             <button
               className="btn btn-secondary"
               onClick={() => setIsEditing(false)}
@@ -71,11 +85,34 @@ export function Card({ card }: CardProps): JSX.Element {
             >
               {t("edit")}
             </button>
-            <button className="btn btn-error" onClick={deleteCard}>
+            <button
+              className="btn btn-error"
+              onClick={() => {
+                setSureForDelete(true);
+              }}
+            >
               {t("delete")}
             </button>
           </div>
         </div>
+      )}
+      {sureForDelete && (
+        <SureMessage
+          title={t("deleteCardTitle")}
+          text={t("deleteCardText")}
+          yesText={t("yes")}
+          noText={t("no")}
+          noClick={() => {
+            setSureForDelete(false);
+          }}
+          yesClick={() => {
+            deleteCard();
+          }}
+          cancel={() => {
+            setSureForDelete(false);
+          }}
+          loader={deleteCardLoading}
+        />
       )}
     </div>
   );

@@ -2,24 +2,33 @@
 
 import { JSX, useState } from "react";
 import { useTranslation } from "next-i18next";
+import { useCardService } from "../service/useCardService";
+import { useCardStore } from "../store/useCardContext";
+import Loader from "./ui/Loader";
 
 type AddCardModalProps = {
   onClose: () => void;
-  onSave: (title: string, description: string) => void;
 };
 
-export function AddCardModal({
-  onClose,
-  onSave,
-}: AddCardModalProps): JSX.Element {
+export function AddCardModal({ onClose }: AddCardModalProps): JSX.Element {
   const { t } = useTranslation();
+  const { createCardLoading } = useCardStore();
+  const { createCard } = useCardService();
 
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
-  const save = () => {
+  const addCard = async () => {
     if (!title.trim()) return;
-    onSave(title, description);
+
+    await createCard({
+      id: new Date().toISOString(),
+      title,
+      description,
+      date: new Date().toLocaleDateString(),
+    });
+
+    onClose();
   };
 
   return (
@@ -58,9 +67,13 @@ export function AddCardModal({
         </div>
 
         <div className="modal-action">
-          <button className="btn btn-success" onClick={save}>
-            {t("save")}
-          </button>
+          {createCardLoading ? (
+            <Loader colorClass="text-success" />
+          ) : (
+            <button className="btn btn-success" onClick={addCard}>
+              {t("save")}
+            </button>
+          )}
           <button className="btn" onClick={onClose}>
             {t("cancel")}
           </button>
