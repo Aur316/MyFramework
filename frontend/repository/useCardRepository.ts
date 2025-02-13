@@ -6,7 +6,6 @@ import { useApiBaseUrl } from "../config/apiConfig";
 export function useCardRepository(): UseCardRepository {
   const { httpGet, httpPost, httpPut, httpDelete } = useHttp();
   const API_BASE_URL = useApiBaseUrl();
-
   const fetchCards = useCallback(async (): Promise<Card[]> => {
     return await httpGet<Card[]>(`${API_BASE_URL}/cards`);
   }, [httpGet, API_BASE_URL]);

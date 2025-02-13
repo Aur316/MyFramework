@@ -29,7 +29,7 @@ export const cardService = {
   createCard: async (card: Card): Promise<Card> => {
     try {
       const newCard = inputCardFactory(card);
-      const savedCard = await cardRepository.createCard(newCard.id, newCard);
+      const savedCard = await cardRepository.createCard(newCard);
       return outputCardFactory(savedCard);
     } catch (error) {
       console.error("Service Error: Failed to create a new card.", error);

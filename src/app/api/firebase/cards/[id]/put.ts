@@ -4,9 +4,9 @@ import { cardsAPI, outputCardFactory } from "../utils";
 export async function PUT(req: Request, context: { params: { id: string } }) {
   try {
     const { id } = context.params;
-    if (!id)
+    if (!id) {
       return NextResponse.json({ message: "Missing ID" }, { status: 400 });
-
+    }
     const body = await req.json();
     const updatedCard = await cardsAPI.updateOne(id, body);
 

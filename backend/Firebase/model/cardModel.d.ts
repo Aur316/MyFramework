@@ -4,14 +4,12 @@ export interface Card {
   description: string;
   date: string;
 }
-
 export interface FirebaseCardDocument extends Omit<Card, "id"> {
-  id: string;
-  createdAt: Date;
+  createdAt: string;
   perm: {
-    read: boolean;
-    write: boolean;
-    delete: boolean;
+    read: [];
+    write: [];
+    delete: [];
   };
-  timestamp: number;
+  timestamp: string;
 }

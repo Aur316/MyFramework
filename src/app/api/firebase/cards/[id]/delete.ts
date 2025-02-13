@@ -7,9 +7,9 @@ export async function DELETE(
 ) {
   try {
     const { id } = context.params;
-    if (!id)
+    if (!id) {
       return NextResponse.json({ message: "Missing ID" }, { status: 400 });
-
+    }
     await cardsAPI.deleteOne(id);
     return new NextResponse(null, { status: 204 });
   } catch (error) {

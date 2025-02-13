@@ -1,40 +1,32 @@
+import { Card } from "../../../../../frontend/types/cardTypes";
 import { useFirebaseAPI } from "../../../../../lib/useFireBaseAPI";
 
-export interface Card {
-  id: string;
-  title: string;
-  description: string;
-  date: string;
-}
-
 export interface FirebaseCardDocument extends Omit<Card, "id"> {
-  id: string;
-  createdAt: Date;
+  createdAt: string;
   perm: {
-    read: boolean;
-    write: boolean;
-    delete: boolean;
+    read: [];
+    write: [];
+    delete: [];
   };
-  timestamp: number;
+  timestamp: string;
 }
 
 export function inputCardFactory(card: Card): FirebaseCardDocument {
   return {
-    id: card.id || "",
     title: card.title,
     description: card.description,
-    date: card.date,
-    createdAt: new Date(),
+    date: new Date().toISOString(),
+    createdAt: new Date().toISOString(),
     perm: {
-      read: true,
-      write: true,
-      delete: true,
+      read: [],
+      write: [],
+      delete: [],
     },
-    timestamp: Date.now(),
+    timestamp: new Date().toISOString(),
   };
 }
 
-export function outputCardFactory(card: any): Card {
+export function outputCardFactory(card: Card): Card {
   return {
     id: card.id,
     title: card.title,

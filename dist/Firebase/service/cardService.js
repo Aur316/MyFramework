@@ -36,7 +36,7 @@ exports.cardService = {
     createCard: (card) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const newCard = (0, factory_1.inputCardFactory)(card);
-            const savedCard = yield cardRepository_1.cardRepository.createCard(newCard.id, newCard);
+            const savedCard = yield cardRepository_1.cardRepository.createCard(newCard);
             return (0, factory_1.outputCardFactory)(savedCard);
         }
         catch (error) {

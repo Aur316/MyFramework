@@ -2,15 +2,16 @@ import { Card, FirebaseCardDocument } from "../model/cardModel";
 
 export function inputCardFactory(card: Card): FirebaseCardDocument {
   return {
-    ...card,
-    id: card.id,
-    createdAt: new Date(),
+    title: card.title,
+    description: card.description,
+    date: new Date().toISOString(),
+    createdAt: new Date().toISOString(),
     perm: {
-      read: true,
-      write: true,
-      delete: true,
+      read: [],
+      write: [],
+      delete: [],
     },
-    timestamp: Date.now(),
+    timestamp: new Date().toISOString(),
   };
 }
 

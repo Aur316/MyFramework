@@ -2,7 +2,7 @@ export interface Card {
   title: string;
   description: string;
   date: string;
-  id: string;
+  id?: string;
 }
 
 export interface CardContextType {
