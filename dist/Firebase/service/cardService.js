@@ -10,13 +10,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cardService = void 0;
+const redisCrud_1 = require("../../Redis/redisCrud");
 const factory_1 = require("../factory/factory");
 const cardRepository_1 = require("../repository/cardRepository");
+const CACHE_KEY = "all_cards";
 exports.cardService = {
     getAllCards: () => __awaiter(void 0, void 0, void 0, function* () {
         try {
+            const cachedData = yield redisCrud_1.redisCrud.getRedis(CACHE_KEY);
+            if (cachedData) {
+                console.log("Cache Hit: Cards retrieved from Redis.");
+                return cachedData;
+            }
+            console.log("Cache Miss: Fetching cards from database...");
             const docs = yield cardRepository_1.cardRepository.getAllCards();
-            return docs.map(factory_1.outputCardFactory);
+            const transformedDocs = docs.map(factory_1.outputCardFactory);
+            yield redisCrud_1.redisCrud.addRedis(CACHE_KEY, transformedDocs, 300);
+            return transformedDocs;
         }
         catch (error) {
             console.error("Service Error: Failed to retrieve all cards.", error);

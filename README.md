@@ -112,3 +112,23 @@ Configure the database settings in frontend/config/apiConfig.ts.
 On line 13, you will find the baseURL, which determines the API connection.
 Use the NEXT_PUBLIC_DATABASE environment variable to switch between MongoDB and Firebase.
 Set NEXT_PUBLIC_DATABASE=firebase or NEXT_PUBLIC_DATABASE=mongo, and the app will automatically use the corresponding database.
+
+BACKEND PATTERN :
+
+---
+
+1️⃣ Controller Layer (API Endpoints)
+
+Handles API requests and responses.
+No business logic, just forwards calls to the service layer.
+Manages error handling and request validation.
+2️⃣ Service Layer (Business Logic)
+
+Processes data, applies business rules, and handles transformations.
+Calls the repository layer for database operations.
+Ensures clean separation of concerns.
+3️⃣ Repository Layer (Database Access)
+
+Directly interacts with the database (CRUD operations).
+No business logic, only data fetching and storage.
+Abstracts database implementation from the service layer.

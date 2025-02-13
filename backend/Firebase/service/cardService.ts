@@ -1,12 +1,27 @@
 import { Card } from "../../Mongo/model/cardModel";
+import { redisCrud } from "../../Redis/redisCrud";
 import { inputCardFactory, outputCardFactory } from "../factory/factory";
 import { cardRepository } from "../repository/cardRepository";
+
+const CACHE_KEY = "all_cards";
 
 export const cardService = {
   getAllCards: async (): Promise<Card[]> => {
     try {
+      const cachedData = await redisCrud.getRedis<Card[]>(CACHE_KEY);
+
+      if (cachedData) {
+        console.log("Cache Hit: Cards retrieved from Redis.");
+        return cachedData;
+      }
+
+      console.log("Cache Miss: Fetching cards from database...");
       const docs = await cardRepository.getAllCards();
-      return docs.map(outputCardFactory);
+      const transformedDocs = docs.map(outputCardFactory);
+
+      await redisCrud.addRedis(CACHE_KEY, transformedDocs, 300);
+
+      return transformedDocs;
     } catch (error) {
       console.error("Service Error: Failed to retrieve all cards.", error);
       throw new Error("Service Error: Unable to fetch cards.");
