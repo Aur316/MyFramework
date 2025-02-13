@@ -3,6 +3,7 @@ import "./globals.css";
 import { CardProvider } from "../../frontend/store/useCardContext";
 import { Sidebar } from "../../frontend/components/SideBar";
 import Providers from "@/app/provider";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +26,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Sidebar />
+        <Toaster position="top-right" richColors />
         <CardProvider>
           <Providers>{children}</Providers>
         </CardProvider>{" "}
