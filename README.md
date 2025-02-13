@@ -91,3 +91,24 @@ The backend runs on http://localhost:5000 by default.
 ✅ Supports multiple databases (MongoDB now, Firestore soon).
 
 🚀 This framework provides a modern and scalable foundation for a fullstack application!
+
+Configuration Guide
+
+---
+
+To configure the framework, follow these steps:
+
+1. Using the Framework with a Server
+
+Set NEXT_PUBLIC_DATA_SOURCE=server in your .env file.
+You can choose which database to use by configuring it in backend/route/routes.
+Currently, this setup is very basic.
+On line 6, you can specify whether to use the MongoDB Controller or the Firebase Controller.
+
+2. Using the Framework with Next.js API Routes
+
+Set NEXT_PUBLIC_DATA_SOURCE=api in your .env file.
+Configure the database settings in frontend/config/apiConfig.ts.
+On line 13, you will find the baseURL, which determines the API connection.
+Use the NEXT_PUBLIC_DATABASE environment variable to switch between MongoDB and Firebase.
+Set NEXT_PUBLIC_DATABASE=firebase or NEXT_PUBLIC_DATABASE=mongo, and the app will automatically use the corresponding database.
