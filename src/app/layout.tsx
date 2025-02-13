@@ -23,13 +23,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex h-screen`}
       >
-        <Sidebar />
-        <Toaster position="top-right" richColors />
-        <CardProvider>
-          <Providers>{children}</Providers>
-        </CardProvider>{" "}
+        <div>
+          <Sidebar />
+        </div>
+
+        <div className="flex-1 flex flex-col">
+          <Toaster position="top-right" richColors />
+          <CardProvider>
+            <Providers>{children}</Providers>
+          </CardProvider>
+        </div>
       </body>
     </html>
   );
